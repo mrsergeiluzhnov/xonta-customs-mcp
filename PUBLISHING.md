@@ -8,6 +8,20 @@
 Пакет PyPI: **`xonta-customs-mcp`**
 Репозиторий: **`github.com/mrsergeiluzhnov/xonta-customs-mcp`**
 
+## Быстрый путь (3 команды)
+
+```bash
+# на своём компьютере, в распакованной папке (git-репозиторий с коммитом уже внутри)
+bash scripts/publish.sh            # GitHub + PyPI + официальный реестр
+
+# на VPS под root (после того как пакет появился на PyPI)
+curl -O https://raw.githubusercontent.com/mrsergeiluzhnov/xonta-customs-mcp/main/scripts/deploy_vps.sh
+bash deploy_vps.sh /tmp/tnved.xlsx # сервис + загрузка тарифа
+```
+
+Перед `publish.sh` один раз войдите в `gh` и выполните вход в реестр (шаг 4 ниже).
+Затем nginx (шаг 2), каталоги (шаги 5–9). Ниже то же самое по шагам.
+
 ---
 
 ## Шаг 1. GitHub
