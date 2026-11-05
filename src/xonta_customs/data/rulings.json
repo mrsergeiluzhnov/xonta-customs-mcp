@@ -1,0 +1,39 @@
+{
+  "updated": "2026-11-05",
+  "note": "Решения Коллегии ЕЭК о классификации отдельных видов товаров. Обязательны для всех таможен ЕАЭС. Пополняется командой xonta-customs-add-ruling или правкой этого файла.",
+  "rulings": [
+    {
+      "id": "eec-2026-100",
+      "authority": "Коллегия ЕЭК",
+      "number": "100",
+      "date": "2026-08-04",
+      "in_force": "2026-09-09",
+      "product": "Пищевой продукт «приправа «натуральный сок лимона»",
+      "tnved": "2009",
+      "level": "товарная позиция",
+      "url": "https://www.ifcg.ru/news/2026-09-28/razasnena-klassifikacia-otdelnyh-tovarov/"
+    },
+    {
+      "id": "eec-2026-106",
+      "authority": "Коллегия ЕЭК",
+      "number": "106",
+      "date": "2026-08-18",
+      "in_force": "2026-09-19",
+      "product": "Картридж сменный предколоночный для жидкостных хроматографов",
+      "tnved": "8421",
+      "level": "товарная позиция",
+      "url": "https://ppt.ru/obzory/vstupaet-v-silu/reshenie-kollegii-yeek-18-08-2026-106"
+    },
+    {
+      "id": "eec-2026-107",
+      "authority": "Коллегия ЕЭК",
+      "number": "107",
+      "date": "2026-08-18",
+      "in_force": "2026-09-19",
+      "product": "Тепловизионный прицел",
+      "tnved": "9013100000",
+      "level": "подсубпозиция",
+      "url": "https://www.ifcg.ru/news/2026-09-28/razasnena-klassifikacia-otdelnyh-tovarov/"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+[Unit]
+Description=Xonta Customs RU MCP server
+After=network-online.target
+
+[Service]
+User=xonta
+WorkingDirectory=/opt/xonta-customs
+Environment=XONTA_CUSTOMS_DATA=/opt/xonta-customs/data
+Environment=ALLOWED_HOSTS=mcp.xonta.ru
+# Internal DocParse endpoint on the same VPS (no x402 payment for internal calls).
+# Put the real path and token here; keep the token out of git.
+EnvironmentFile=-/opt/xonta-customs/docparse.env
+ExecStart=/opt/xonta-customs/venv/bin/xonta-customs-mcp --http --host 127.0.0.1 --port 8765
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "ru.xonta/customs",
+  "title": "Xonta Customs RU",
+  "description": "Import into Russia/EAEU: invoice parsing, TN VED codes, duties, VAT, fees, car recycling fee",
+  "version": "0.2.0",
+  "websiteUrl": "https://xonta.ru",
+  "repository": {
+    "url": "https://github.com/mrsergeiluzhnov/xonta-customs-mcp",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "pypi",
+      "registryBaseUrl": "https://pypi.org",
+      "identifier": "xonta-customs-mcp",
+      "version": "0.2.0",
+      "runtimeHint": "uvx",
+      "transport": { "type": "stdio" },
+      "environmentVariables": [
+        {
+          "name": "XONTA_CUSTOMS_DATA",
+          "description": "Folder for the local tariff database (default ~/.xonta-customs)",
+          "isRequired": false
+        },
+        {
+          "name": "DOCPARSE_URL",
+          "description": "Optional DocParse endpoint to convert PDF/scanned invoices to Markdown",
+          "isRequired": false
+        },
+        {
+          "name": "DOCPARSE_TOKEN",
+          "description": "Optional bearer token for DOCPARSE_URL",
+          "isRequired": false,
+          "isSecret": true
+        }
+      ]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://mcp.xonta.ru/customs/mcp"
+    }
+  ]
+}

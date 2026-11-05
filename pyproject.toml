@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "xonta-customs-mcp"
+version = "0.2.0"
+description = "MCP server for importing goods into Russia and the EAEU: invoice parsing, TN VED codes, duties, VAT, customs fees, car recycling fee, antidumping, classification rulings"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{ name = "Sergei Luzhnov" }]
+keywords = ["mcp", "customs", "tnved", "eaeu", "russia", "import", "hs-code", "tariff", "ai-agents"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Operating System :: OS Independent",
+  "Topic :: Office/Business :: Financial",
+  "Natural Language :: Russian",
+  "Natural Language :: English",
+]
+dependencies = [
+  "mcp>=2.3,<3",
+  "httpx>=0.27",
+  "openpyxl>=3.1",
+  "uvicorn>=0.30",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-asyncio>=0.23"]
+
+[project.urls]
+Homepage = "https://xonta.ru"
+Repository = "https://github.com/mrsergeiluzhnov/xonta-customs-mcp"
+Issues = "https://github.com/mrsergeiluzhnov/xonta-customs-mcp/issues"
+
+[project.scripts]
+xonta-customs-mcp = "xonta_customs.server:main"
+xonta-customs-load-tariff = "xonta_customs.loader:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/xonta_customs"]
+artifacts = ["src/xonta_customs/data/*.json"]
+
+[tool.hatch.build.targets.sdist]
+artifacts = ["src/xonta_customs/data/*.json"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]

@@ -1,0 +1,90 @@
+{
+  "updated": "2026-11-05",
+  "note": "Подборка действующих мер защиты внутреннего рынка ЕАЭС по решениям Коллегии ЕЭК, продлённых в 2026 году. Список неполный. Размер пошлины по производителям задан в исходном решении (поле rate_source) — проверьте его перед расчётом.",
+  "measures": [
+    {
+      "id": "leaf-springs-cn",
+      "product": "Рессоры листовые и листы для них",
+      "keywords": ["рессор", "лист рессоры", "leaf spring"],
+      "tnved_prefixes": ["732010"],
+      "origin": ["CN"],
+      "type": "antidumping",
+      "valid_until": "2031-08-24",
+      "decision": "Решение Коллегии ЕЭК от 25.08.2026 № 111 (продление, в силе с 27.09.2026)",
+      "rate_source": "Решение Коллегии ЕЭК от 16.02.2021 № 17",
+      "url": "https://www.alta.ru/tamdoc/26kr0111/"
+    },
+    {
+      "id": "aluminium-cookware-cn",
+      "product": "Алюминиевая посуда",
+      "keywords": ["алюмини посуд", "кастрюл алюмини", "сковород алюмини", "aluminium cookware"],
+      "tnved_prefixes": [],
+      "origin": ["CN"],
+      "type": "antidumping",
+      "valid_until": "2027-05-28",
+      "decision": "Решение Коллегии ЕЭК от 25.08.2026 № 108 (продление)",
+      "rate_source": "Решение Коллегии ЕЭК от 24.08.2021 № 107",
+      "url": "https://www.alta.ru/tamdoc/26kr0108/"
+    },
+    {
+      "id": "truck-tyres-cn",
+      "product": "Грузовые шины",
+      "keywords": ["шин груз", "грузов шин", "truck tyre", "truck tire"],
+      "tnved_prefixes": [],
+      "origin": ["CN"],
+      "type": "antidumping",
+      "valid_until": "2026-11-13",
+      "decision": "Решение Коллегии ЕЭК от 24.03.2026 № 37 (продление)",
+      "rate_source": "Решение Коллегии ЕЭК от 17.11.2015 № 154",
+      "url": "https://www.alta.ru/tamdoc/26kr0037/"
+    },
+    {
+      "id": "aluminium-strip-az-cn",
+      "product": "Алюминиевая лента (включая плакированную и ленту из сплава 1060 для обмоток трансформаторов)",
+      "keywords": ["алюмини лент", "aluminium strip", "aluminum strip"],
+      "tnved_prefixes": [],
+      "origin": ["AZ", "CN"],
+      "type": "antidumping",
+      "valid_until": "2031-05-24",
+      "decision": "Решение Коллегии ЕЭК от 25.05.2026 № 62 (продление)",
+      "rate_source": "Решение Коллегии ЕЭК от 22.09.2020 № 115",
+      "url": "https://www.alta.ru/tamdoc/26kr0062/"
+    },
+    {
+      "id": "seamless-stainless-tubes-ua",
+      "product": "Бесшовные трубы из коррозионностойкой (нержавеющей) стали",
+      "keywords": ["бесшовн труб", "нержаве труб", "seamless stainless"],
+      "tnved_prefixes": [],
+      "origin": ["UA"],
+      "type": "antidumping",
+      "valid_until": "2027-04-29",
+      "decision": "Решение Коллегии ЕЭК от 07.07.2026 № 84 (продление)",
+      "rate_source": "Решение Коллегии ЕЭК от 26.01.2016 № 6",
+      "url": "https://www.alta.ru/tamdoc/26kr0084/"
+    },
+    {
+      "id": "welded-stainless-tubes-cn",
+      "product": "Сварные трубы, трубки и профили полые из коррозионностойкой (нержавеющей) стали",
+      "keywords": ["сварн труб", "нержаве труб", "профил пол нержаве", "welded stainless"],
+      "tnved_prefixes": [],
+      "origin": ["CN"],
+      "type": "antidumping",
+      "valid_until": null,
+      "decision": "Решение Коллегии ЕЭК от 08.09.2026 № 121 (продление)",
+      "rate_source": "см. решение № 121 и исходное решение о введении меры",
+      "url": "https://www.alta.ru/tamdoc/26kr0121/"
+    },
+    {
+      "id": "crawler-bulldozers-cn",
+      "product": "Гусеничные бульдозеры с неповоротным и поворотным отвалом мощностью до 250 л.с.",
+      "keywords": ["бульдозер", "bulldozer"],
+      "tnved_prefixes": [],
+      "origin": ["CN"],
+      "type": "antidumping",
+      "valid_until": null,
+      "decision": "Решение Коллегии ЕЭК от 25.05.2026 № 63 (продление)",
+      "rate_source": "см. решение № 63 и исходное решение о введении меры",
+      "url": "https://www.tks.ru/news/law/2026/05/31/0011/o-prodlenii-dejstviya-antidempingovoj-meryi-v-otnoshenii-gusenichnyih-buldozerov-s-nepovorotnyim-i-povorotnyim-otvalom-moschnostyu-do-250-l-s-proishodyaschih-iz-kitajskoj-narodnoj-respubliki-i-vvozimyih-na-tamozhennuyu-territoriyu-evrazijskogo-ekonom/"
+    }
+  ]
+}
