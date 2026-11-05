@@ -120,8 +120,8 @@ ALLOWED_HOSTS=mcp.example.com xonta-customs-mcp --http --host 127.0.0.1 --port 8
 Endpoints: `/mcp` (Streamable HTTP), `/health`, `/.well-known/mcp/server-card.json`.
 See `deploy/` for systemd and nginx examples, and `Dockerfile`.
 
-PDF and scanned invoices are converted to Markdown by [DocParse](https://registry.modelcontextprotocol.io)
-(`io.github.mrsergeiluzhnov/docparse`). Set `DOCPARSE_URL` (endpoint that takes `{"url": ...}` and
+PDF and scanned invoices are converted to Markdown by DocParse
+(`io.github.mrsergeiluzhnov/docparse` in the MCP registry). Set `DOCPARSE_URL` (endpoint that takes `{"url": ...}` and
 returns Markdown) and optionally `DOCPARSE_TOKEN`. Without it, `.xlsx`/`.csv` invoices still work,
 and any client can pass invoice text directly in `invoice_text`. File links pointing to private or
 local addresses are refused.
@@ -170,10 +170,99 @@ MIT. Made by [Xonta](https://xonta.ru).
 
 ## Подключение
 
-Удалённо, без установки: `https://mcp.xonta.ru/customs/mcp`
+### Удалённо, без установки
 
-Локально: `uvx xonta-customs-mcp`. Для поиска кодов загрузите таблицу ТН ВЭД:
-`xonta-customs-load-tariff tnved.xlsx`. Подойдёт любой `.xlsx` или `.csv` с колонками кода и наименования.
+```
+https://mcp.xonta.ru/customs/mcp
+```
+
+Claude Desktop, Cursor и любой клиент с поддержкой удалённых MCP-серверов:
+
+```json
+{
+  "mcpServers": {
+    "xonta-customs": { "url": "https://mcp.xonta.ru/customs/mcp" }
+  }
+}
+```
+
+### Локально (stdio)
+
+```bash
+uvx xonta-customs-mcp
+```
+
+```json
+{
+  "mcpServers": {
+    "xonta-customs": { "command": "uvx", "args": ["xonta-customs-mcp"] }
+  }
+}
+```
+
+Для поиска кодов локальному серверу нужна таблица ТН ВЭД. Расчёт работает и без неё, если передать ставку:
+
+```bash
+uvx --from xonta-customs-mcp xonta-customs-load-tariff tnved.xlsx --source "ЕТТ ЕАЭС, выгрузка от 05.11.2026"
+```
+
+Подойдёт любой `.xlsx` или `.csv` со строкой заголовков, где есть колонки кода и наименования.
+Колонки ставки и единицы измерения подхватываются, если они есть.
+
+## Примеры
+
+> Обувь с верхом из натуральной кожи из Китая, 1 000 пар, по инвойсу 20 000 юаней. Сколько заплатим на таможне?
+
+Агент вызывает `tnved_search("обувь с верхом из натуральной кожи")`, затем
+`calc_import_payments(customs_value=20000, currency="CNY", code="6403990000", quantity_pair=1000)`
+и получает пошлину по специфической части комбинированной ставки, НДС 22% сверху, сбор 2026 года и итог.
+
+> Вот инвойс поставщика (PDF). Посчитай платежи.
+
+`parse_invoice(file_url=...)` возвращает три позиции с количеством, ценами, весом нетто и HS-кодами,
+и предупреждает, что при условиях FOB к таможенной стоимости нужно добавить фрахт и страховку.
+Дальше каждая позиция проходит через `tnved_search` и `calc_import_payments`.
+
+> Автомобиль 2 л, 170 л. с., 2 года, ввозит компания. Какой утильсбор?
+
+`calc_recycling_fee(engine="ice", power_hp=170, engine_volume_cc=1998)` → коэффициент 45, 900 000 рублей в 2026 году.
+
+## Данные и источники
+
+| Данные | Источник | Обновлено |
+|---|---|---|
+| ТН ВЭД ЕАЭС и ставки ЕТТ | Решение Совета ЕЭК № 80 от 14.09.2021, загружается из файла выгрузки | при загрузке |
+| Таможенные сборы 2026 | Постановление Правительства № 1637 от 28.11.2024 в редакции № 1638 от 23.10.2025 | 01.01.2026 |
+| НДС при ввозе | Ст. 164 НК РФ в редакции Федерального закона № 425-ФЗ | 01.01.2026 |
+| Антидемпинговые меры | Решения Коллегии ЕЭК, продлённые в 2026 году (неполный список) | 05.11.2026 |
+| Решения о классификации | Решения Коллегии ЕЭК (неполный список) | 05.11.2026 |
+| Курсы валют | Банк России, ежедневно | в реальном времени |
+| Утильсбор на автомобили | Постановление Правительства № 1291 от 26.12.2013, приложение, раздел I, в редакции № 1713 от 01.11.2025 | 01.12.2025, график до 2030 |
+
+Новые меры и решения можно добавить самому: правьте `src/xonta_customs/data/*.json` и присылайте pull request.
+
+## Своя установка
+
+```bash
+pip install xonta-customs-mcp
+xonta-customs-load-tariff tnved.xlsx
+ALLOWED_HOSTS=mcp.example.com xonta-customs-mcp --http --host 127.0.0.1 --port 8765
+```
+
+Адреса: `/mcp` (Streamable HTTP), `/health`, `/.well-known/mcp/server-card.json`.
+Примеры для systemd и nginx в папке `deploy/`, есть `Dockerfile`.
+
+PDF и сканы инвойсов переводятся в Markdown через DocParse (`io.github.mrsergeiluzhnov/docparse` в реестре MCP).
+Укажите `DOCPARSE_URL` (адрес, который принимает `{"url": ...}` и отдаёт Markdown) и при необходимости `DOCPARSE_TOKEN`.
+Без этого инвойсы в `.xlsx`/`.csv` всё равно разбираются, а текст инвойса клиент может передать сам в `invoice_text`.
+Ссылки на файлы с частных и локальных адресов сервер не открывает.
+
+## Разработка
+
+```bash
+pip install -e ".[dev]"
+pytest
+```
 
 ## Лицензия
 
