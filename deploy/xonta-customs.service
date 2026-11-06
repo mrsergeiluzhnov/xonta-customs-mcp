@@ -3,7 +3,7 @@ Description=Xonta Customs RU MCP server
 After=network-online.target
 
 [Service]
-User=xonta
+User=xcustoms
 WorkingDirectory=/opt/xonta-customs
 Environment=XONTA_CUSTOMS_DATA=/opt/xonta-customs/data
 Environment=ALLOWED_HOSTS=mcp.xonta.ru

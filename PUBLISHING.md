@@ -41,19 +41,19 @@ gh repo edit --add-topic mcp,mcp-server,customs,tnved,eaeu,russia,import,hs-code
 ## Шаг 2. Сервер на VPS (Timeweb, рядом с DocParse)
 
 ```bash
-sudo useradd -r -m -d /opt/xonta-customs xonta
-sudo -u xonta python3 -m venv /opt/xonta-customs/venv
-sudo -u xonta /opt/xonta-customs/venv/bin/pip install xonta-customs-mcp   # после шага 3
+sudo useradd -r -M -d /opt/xonta-customs -s /usr/sbin/nologin xcustoms
+sudo -u xcustoms python3 -m venv /opt/xonta-customs/venv
+sudo -u xcustoms /opt/xonta-customs/venv/bin/pip install xonta-customs-mcp   # после шага 3
 # до публикации на PyPI: pip install git+https://github.com/mrsergeiluzhnov/xonta-customs-mcp
 
-sudo -u xonta mkdir -p /opt/xonta-customs/data
+sudo -u xcustoms mkdir -p /opt/xonta-customs/data
 ```
 
 **Загрузите таблицу ТН ВЭД со ставками.** Скачайте Excel с кодами и ставками ЕТТ
 (например, бесплатная ежедневная выгрузка на tws.by/tws/tnved/download) и загрузите:
 
 ```bash
-sudo -u xonta env XONTA_CUSTOMS_DATA=/opt/xonta-customs/data \
+sudo -u xcustoms env XONTA_CUSTOMS_DATA=/opt/xonta-customs/data \
   /opt/xonta-customs/venv/bin/xonta-customs-load-tariff tnved.xlsx --source "tws.by, 05.11.2026"
 ```
 
@@ -69,7 +69,7 @@ sudo -u xonta env XONTA_CUSTOMS_DATA=/opt/xonta-customs/data \
 `markdown`/`text`/`content`). Если у DocParse такого входа нет, добавьте его, слушая только 127.0.0.1:
 
 ```bash
-sudo -u xonta tee /opt/xonta-customs/docparse.env >/dev/null <<'EOF'
+sudo -u xcustoms tee /opt/xonta-customs/docparse.env >/dev/null <<'EOF'
 DOCPARSE_URL=http://127.0.0.1:<порт_docparse>/<путь>
 DOCPARSE_TOKEN=<длинный_случайный_токен>
 EOF

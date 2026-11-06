@@ -5,20 +5,24 @@
 set -euo pipefail
 
 APP=/opt/xonta-customs
+# own system user, not shared with anything else on the server (the name "xonta" may already be taken)
+RUN_AS=${XONTA_CUSTOMS_USER:-xcustoms}
 SRC=${XONTA_CUSTOMS_SRC:-xonta-customs-mcp}   # PyPI name, or git+https://github.com/mrsergeiluzhnov/xonta-customs-mcp
 
-id xonta >/dev/null 2>&1 || useradd -r -m -d "$APP" -s /usr/sbin/nologin xonta
-mkdir -p "$APP/data" && chown -R xonta:xonta "$APP"
+id "$RUN_AS" >/dev/null 2>&1 || useradd -r -M -d "$APP" -s /usr/sbin/nologin "$RUN_AS"
+mkdir -p "$APP/data" && chown -R "$RUN_AS:$RUN_AS" "$APP"
 
-[ -x "$APP/venv/bin/python" ] || sudo -u xonta python3 -m venv "$APP/venv"
-sudo -u xonta "$APP/venv/bin/pip" install -q --upgrade pip
-sudo -u xonta "$APP/venv/bin/pip" install -q --upgrade "$SRC"
+python3 -m venv --help >/dev/null 2>&1 || { echo "python3-venv is missing: apt install -y python3-venv"; exit 1; }
+ss -ltn | grep -q ":8765 " && ! systemctl is-active -q xonta-customs && { echo "port 8765 is taken by something else"; exit 1; }
+[ -x "$APP/venv/bin/python" ] || sudo -u "$RUN_AS" python3 -m venv "$APP/venv"
+sudo -u "$RUN_AS" "$APP/venv/bin/pip" install -q --upgrade pip
+sudo -u "$RUN_AS" "$APP/venv/bin/pip" install -q --upgrade "$SRC"
 
 if [ "${1:-}" != "" ]; then
-  # copy first: the xonta user may not be able to read files in /root
+  # copy first: the service user may not be able to read files in /root
   ext="${1##*.}"
-  install -o xonta -g xonta -m 640 "$1" "$APP/data/tariff-import.$ext"
-  sudo -u xonta env XONTA_CUSTOMS_DATA="$APP/data" "$APP/venv/bin/xonta-customs-load-tariff" \
+  install -o "$RUN_AS" -g "$RUN_AS" -m 640 "$1" "$APP/data/tariff-import.$ext"
+  sudo -u "$RUN_AS" env XONTA_CUSTOMS_DATA="$APP/data" "$APP/venv/bin/xonta-customs-load-tariff" \
     "$APP/data/tariff-import.$ext" --source "$(basename "$1"), $(date +%F)"
 fi
 
@@ -28,7 +32,7 @@ Description=Xonta Customs RU MCP server
 After=network-online.target
 
 [Service]
-User=xonta
+User=$RUN_AS
 WorkingDirectory=$APP
 Environment=XONTA_CUSTOMS_DATA=$APP/data
 Environment=ALLOWED_HOSTS=mcp.xonta.ru
