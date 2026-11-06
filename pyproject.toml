@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "xonta-customs-mcp"
-version = "0.2.0"
+version = "0.2.1"
 description = "MCP server for importing goods into Russia and the EAEU: invoice parsing, TN VED codes, duties, VAT, customs fees, car recycling fee, antidumping, classification rulings"
 readme = "README.md"
 license = "MIT"

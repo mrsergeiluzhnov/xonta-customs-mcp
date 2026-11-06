@@ -145,7 +145,7 @@ curl "https://registry.modelcontextprotocol.io/v0.1/servers?search=ru.xonta/cust
 командой `mcp-publisher login dns --domain xonta.ru --private-key ...`.
 
 **При каждом обновлении** поднимайте `version` в `pyproject.toml`, `src/xonta_customs/__init__.py` и `server.json`
-(в двух местах; сейчас везде 0.2.0), выкладывайте на PyPI и повторяйте `mcp-publisher publish`.
+(в двух местах; сейчас везде 0.2.1), выкладывайте на PyPI и повторяйте `mcp-publisher publish`.
 
 ## Шаг 5. Glama (glama.ai/mcp/servers)
 

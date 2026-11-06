@@ -124,7 +124,7 @@ def connect(path: Path | None = None) -> sqlite3.Connection:
 _HEADER_HINTS = {
     "code": ("код",),
     "name": ("наимен", "описан", "name"),
-    "duty": ("пошлин", "ставк", "ett", "етт", "duty"),
+    "duty": ("пошлин", "ставк", "тариф", "ett", "етт", "duty"),
     "unit": ("доп", "ед. изм", "единиц", "unit"),
 }
 
@@ -147,12 +147,37 @@ def _detect_columns(header: list[str]) -> dict[str, int]:
     return cols
 
 
+def _has_header(row) -> bool:
+    try:
+        _detect_columns([str(x) for x in row])
+        return True
+    except ValueError:
+        return False
+
+
+# tws.by joins levels of the nomenclature with an arrow character; keep the levels, drop the arrows
+_ARROWS = re.compile(r"\s*[\U0001F800-\U0001F8FF\u2192\u2794\u27A4\u25BA]\s*")
+
+
+def _clean_name(name: str) -> str:
+    return re.sub(r"\s+", " ", _ARROWS.sub(" ", name)).strip()
+
+
 def _iter_rows(path: Path):
     suffix = path.suffix.lower()
     if suffix in (".xlsx", ".xlsm"):
         from openpyxl import load_workbook
 
         wb = load_workbook(path, read_only=True, data_only=True)
+        # some exports (tws.by) put a title sheet first and the codes on the second one:
+        # take the first sheet whose first rows contain a code/name header
+        sheets = [wb.active] + [w for w in wb.worksheets if w is not wb.active]
+        for ws in sheets:
+            head = [[("" if v is None else v) for v in r] for r in ws.iter_rows(min_row=1, max_row=30, values_only=True)]
+            if any(_has_header(r) for r in head):
+                for row in ws.iter_rows(values_only=True):
+                    yield [("" if v is None else v) for v in row]
+                return
         ws = wb.active
         for row in ws.iter_rows(values_only=True):
             yield [("" if v is None else v) for v in row]
@@ -192,7 +217,7 @@ def load_tariff(path: Path, source: str, db: Path | None = None) -> int:
             if len(row) <= max(cols.values()):
                 row = list(row) + [""] * (max(cols.values()) + 1 - len(row))
             code = normalize_code(str(row[cols["code"]]))
-            name = str(row[cols["name"]]).strip()
+            name = _clean_name(str(row[cols["name"]]))
             if not code or not name or len(code) > 10:
                 continue
             duty = str(row[cols["duty"]]).strip() if "duty" in cols else ""

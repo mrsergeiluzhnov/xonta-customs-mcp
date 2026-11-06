@@ -3,7 +3,7 @@
   "name": "ru.xonta/customs",
   "title": "Xonta Customs RU",
   "description": "Import into Russia/EAEU: invoice parsing, TN VED codes, duties, VAT, fees, car recycling fee",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "websiteUrl": "https://xonta.ru",
   "repository": {
     "url": "https://github.com/mrsergeiluzhnov/xonta-customs-mcp",
@@ -14,7 +14,7 @@
       "registryType": "pypi",
       "registryBaseUrl": "https://pypi.org",
       "identifier": "xonta-customs-mcp",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "runtimeHint": "uvx",
       "transport": { "type": "stdio" },
       "environmentVariables": [

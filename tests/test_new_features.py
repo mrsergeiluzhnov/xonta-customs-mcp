@@ -136,3 +136,30 @@ def test_no_table():
 def test_ssrf_blocked(url):
     with pytest.raises(ValueError):
         invoice.check_public_url(url)
+
+
+def test_tariff_on_second_sheet_with_arrows(tmp_path):
+    """tws.by export: a title sheet first, codes on the second sheet, levels joined by an arrow."""
+    from openpyxl import Workbook
+    from xonta_customs import store
+
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Система TWS"
+    ws.append([None, "Список кодов на второй вкладке", "https://www.tws.by/"])
+    ws.append(["Справочник кодов ТНВЭД с подробностями", "https://www.tws.by/tws/tnved"])
+    ws2 = wb.create_sheet("ТНВЭД")
+    ws2.append(["Код", "Наименование", "Тариф", "Подробности"])
+    ws2.append(["0101291000", "лошади: \U0001F83A прочие: \U0001F83A убойные", "5%", "подробнее"])
+    ws2.append(["6403990000", "прочая обувь с верхом из натуральной кожи", "10%, но не менее 1.5 EUR за 1 пар", "подробнее"])
+    path = tmp_path / "tws.xlsx"
+    wb.save(path)
+
+    db = tmp_path / "t.sqlite"
+    assert store.load_tariff(path, "test", db=db) == 2
+    con = store.connect(db)
+    rows = dict(con.execute("SELECT code, name FROM tnved").fetchall())
+    duty = con.execute("SELECT duty_raw FROM tnved WHERE code='6403990000'").fetchone()[0]
+    con.close()
+    assert rows["0101291000"] == "лошади: прочие: убойные"
+    assert duty.startswith("10%")
