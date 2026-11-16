@@ -133,6 +133,10 @@ pip install -e ".[dev]"
 pytest
 ```
 
+## Part of Xonta
+
+Xonta Customs RU is one of the free tools from [Xonta](https://xonta.dev/?utm_source=xonta-customs&utm_medium=github). Our main project is the Xonta orchestrator: it checks how honestly AI agents report what they did and how they spend money, and shares these signals with other orchestrators over the open OCX protocol. Code: [github.com/mrsergeiluzhnov/xonta](https://github.com/mrsergeiluzhnov/xonta).
+
 ## License
 
 MIT. Made by [Xonta](https://xonta.ru).
@@ -263,6 +267,10 @@ PDF и сканы инвойсов переводятся в Markdown через
 pip install -e ".[dev]"
 pytest
 ```
+
+## Часть Xonta
+
+Xonta Customs RU — один из бесплатных инструментов [Xonta](https://xonta.dev/?utm_source=xonta-customs&utm_medium=github). Основной наш проект — оркестратор Xonta: он проверяет, насколько честно ИИ-агенты отчитываются о сделанном и как тратят деньги, и обменивается этими сигналами с другими оркестраторами по открытому протоколу OCX. Код: [github.com/mrsergeiluzhnov/xonta](https://github.com/mrsergeiluzhnov/xonta).
 
 ## Лицензия
 
