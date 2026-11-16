@@ -1,5 +1,7 @@
 # Xonta Customs RU
 
+[![xonta passport](https://orchestrator.xonta.dev/v1/agents/ag_f531c6b2d4/badge.svg)](https://xonta.dev/passport/?id=ag_f531c6b2d4)
+
 MCP server for importing goods into Russia and the Eurasian Economic Union (EAEU).
 Free and open source.
 
@@ -137,7 +139,7 @@ pytest
 
 Xonta Customs RU is one of the free tools from [Xonta](https://xonta.dev/?utm_source=xonta-customs&utm_medium=github). Our main project is the Xonta orchestrator: it checks how honestly AI agents report what they did and how they spend money, and shares these signals with other orchestrators over the open OCX protocol. Code: [github.com/mrsergeiluzhnov/xonta](https://github.com/mrsergeiluzhnov/xonta).
 
-This server is itself registered with the public Xonta orchestrator. Its [passport](https://orchestrator.xonta.dev/v1/agents/ag_f531c6b2d4/passport) confirms control of the domain and holds a signed scan of the tool list, so you can check that the tools you connect to are the ones that were scanned.
+This server is itself registered with the public Xonta orchestrator. Its [passport](https://xonta.dev/passport/?id=ag_f531c6b2d4&lang=en) confirms control of the domain and holds a signed scan of the tool list, so you can check that the tools you connect to are the ones that were scanned. The page checks the signatures in your browser.
 
 ## License
 
@@ -274,7 +276,7 @@ pytest
 
 Xonta Customs RU — один из бесплатных инструментов [Xonta](https://xonta.dev/?utm_source=xonta-customs&utm_medium=github). Основной наш проект — оркестратор Xonta: он проверяет, насколько честно ИИ-агенты отчитываются о сделанном и как тратят деньги, и обменивается этими сигналами с другими оркестраторами по открытому протоколу OCX. Код: [github.com/mrsergeiluzhnov/xonta](https://github.com/mrsergeiluzhnov/xonta).
 
-Этот сервер сам подключён к публичному оркестратору Xonta. Его [паспорт](https://orchestrator.xonta.dev/v1/agents/ag_f531c6b2d4/passport) подтверждает владение доменом и содержит подписанный скан списка инструментов: можно проверить, что вы подключаетесь к тем же инструментам, что были просканированы.
+Этот сервер сам подключён к публичному оркестратору Xonta. Его [паспорт](https://xonta.dev/passport/?id=ag_f531c6b2d4&lang=ru) подтверждает владение доменом и содержит подписанный скан списка инструментов: можно проверить, что вы подключаетесь к тем же инструментам, что были просканированы. Подписи страница проверяет прямо в браузере.
 
 ## Лицензия
 
